@@ -84,8 +84,11 @@ body:focus{outline:none}
 .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;cursor:default}
 .brand i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
 .nav{display:flex;align-items:center;gap:24px;font-size:13px;color:var(--muted)}
-.theme-toggle{display:inline-grid;place-items:center;width:38px;height:38px;padding:0;background:var(--bg);border:1.5px solid var(--accent);border-radius:50%;font:18px/1 "JetBrains Mono",monospace;color:var(--accent);cursor:pointer;transition:background .2s,color .2s}
-.theme-toggle:hover{background:var(--accent);color:var(--bg)}
+.theme-toggle{display:inline-grid;place-items:center;width:38px;height:38px;padding:0;border:2px solid var(--accent);border-radius:50%;font:18px/1 "JetBrains Mono",monospace;cursor:pointer;transition:transform .2s,box-shadow .2s}
+/* O botão mostra o tema para onde a pessoa vai: ☾ em fundo preto (vai pro escuro) e ☀ em fundo claro (vai pro claro) */
+.theme-toggle[data-alvo="dark"]{background:#0e0f0e;color:#fafaf7}
+.theme-toggle[data-alvo="light"]{background:#fafaf7;color:#1b1b19}
+.theme-toggle:hover{transform:scale(1.08);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}
 
 /* =========================================================
    4. APRESENTAÇÃO
@@ -202,7 +205,7 @@ footer{padding:0 0 40px;font:11px "JetBrains Mono",monospace;color:var(--muted)}
     <a href="#contato">Contato</a>
     <a class="ext" href="https://linkedin.com/in/murilo-martins-ribeiro-a81b1341b" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
     <a class="ext" href="https://github.com/Muzi3060" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-    <button class="theme-toggle" id="tema" type="button" aria-label="Alternar para o tema escuro">☾</button>
+    <button class="theme-toggle" id="tema" data-alvo="dark" type="button" aria-label="Alternar para o tema escuro">☾</button>
   </nav>
 </header>
 
@@ -330,6 +333,7 @@ footer{padding:0 0 40px;font:11px "JetBrains Mono",monospace;color:var(--muted)}
   function atualizar() {
     var escuro = temaAtual() === 'dark';
     botao.textContent = escuro ? '☀' : '☾';
+    botao.dataset.alvo = escuro ? 'light' : 'dark';
     botao.setAttribute('aria-label', escuro ? 'Alternar para o tema claro' : 'Alternar para o tema escuro');
     if (meta) meta.setAttribute('content', escuro ? '#0e0f0e' : '#fafaf7');
   }
